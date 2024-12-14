@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Teacher</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+
+<body style="background-color: rgba(0, 0, 0, 0);">
+    <div class="container">
+        <div class="card shadow col-md-12 border border-0 ">
+            <div class="card-header bg-light py-3 fw-bold">
+                <div class="d-flex justify-content-evenly">
+                    <a href="index.php" class="btn btn-default btn-outline-danger">Home</a>
+                    <h3 class="text-center">Find Your Teacher</h3>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container col-md-8">
+                    <div class="" id="status"></div>
+                    <div class="row my-5 ">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4"><h4>Course : </h4> </div>
+                                    <div class="col-sm-8">
+                                        <select name="course" class="form-control bg-light" id="course">
+                                            <option value="">---- Select Course ----</option>
+                                            <option value="Web Design">Web Design</option>
+                                            <option value="Graphic Design">Graphic Design</option>
+                                            <option value="Python">Python</option>
+                                            <option value="C / C++">C / C++</option>
+                                            <option value="Data Structure">Data Structure</option>
+                                            <option value="Java">Java</option>
+                                            <option value="Node Js">Node Js</option>
+                                            <option value="React Js">React Js</option>
+                                            <option value="Wordpress">Wordpress</option>
+                                            <option value="Digital Marketing">Digital Marketing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-4"><h4>Charges : </h4> </div>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="charge" id="charge" class="form-control bg-light">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center my-3">
+                        <button id="search" type="submit"  class="btn btn-primary text-white col-6">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="search_response">
+
+        </div>
+    </div>
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#status").fadeOut();
+            $("#search").click(function(e){
+                e.preventDefault();
+                $("#search_response").empty();
+                var course = $("#course").val();
+                var charge = $("#charge").val();
+                if(course == "" || charge == "")
+                {
+                    $("#status").fadeIn("slow").addClass("alert alert-danger").html("Please Fill All Fields!");
+                }else{
+                    $("#status").fadeOut("slow");
+                    $.ajax({
+                        url:"search-res.php",
+                        type:"POST",
+                        data:{course:course,charge:charge},
+                        success:function(data)
+                        {
+                            $("#search_response").append(data);
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+</body>
+</html>
